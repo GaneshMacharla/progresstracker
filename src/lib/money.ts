@@ -21,12 +21,12 @@ function trim(n: number): string {
   return n.toFixed(1).replace(/\.0$/, '');
 }
 
-/** Parses input like "5000", "5,000.50" or "₹ 1,00,000" into paise; null if invalid or not positive. */
-export function parseRupeesToPaise(input: string): number | null {
+/** Parses input like "5000", "5,000.50" or "₹ 1,00,000" into paise; null if invalid or not positive (zero allowed with `allowZero`). */
+export function parseRupeesToPaise(input: string, { allowZero = false } = {}): number | null {
   const cleaned = input.replace(/[₹,\s]/g, '');
   if (!/^\d+(\.\d{0,2})?$/.test(cleaned)) return null;
   const paise = Math.round(parseFloat(cleaned) * 100);
-  return paise > 0 ? paise : null;
+  return paise > 0 || (allowZero && paise === 0) ? paise : null;
 }
 
 export function paiseToRupeesString(paise: number): string {

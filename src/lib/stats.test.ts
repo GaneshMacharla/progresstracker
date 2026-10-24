@@ -98,6 +98,8 @@ describe('money', () => {
     expect(parseRupeesToPaise('49.99')).toBe(4999);
     expect(parseRupeesToPaise('-5')).toBeNull();
     expect(parseRupeesToPaise('0')).toBeNull();
+    expect(parseRupeesToPaise('0', { allowZero: true })).toBe(0);
+    expect(parseRupeesToPaise('', { allowZero: true })).toBeNull();
     expect(formatINR(100000_00)).toBe('₹1,00,000');
     expect(formatINR(4999)).toBe('₹49.99');
   });

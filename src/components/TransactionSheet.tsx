@@ -48,8 +48,9 @@ export function TransactionSheet({ open, onClose, challenge, today, editing }: P
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    const paise = parseRupeesToPaise(amount);
-    if (paise == null) return setError('Enter an amount greater than ₹0.');
+    // ₹0 is valid: it records a day with no earnings.
+    const paise = parseRupeesToPaise(amount, { allowZero: true });
+    if (paise == null) return setError('Enter an amount of ₹0 or more.');
     if (!date) return setError('Pick a date.');
     const finalSource = source === 'Other' && customSource.trim() ? customSource.trim() : source;
     await saveTransaction(
