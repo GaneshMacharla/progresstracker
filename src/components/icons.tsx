@@ -87,6 +87,12 @@ export const ShareIcon = (p: P) => (
     <path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v14" />
   </Icon>
 );
+export const PencilIcon = (p: P) => (
+  <Icon {...p}>
+    <path d="M12 20h9" />
+    <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" />
+  </Icon>
+);
 export const BackIcon = (p: P) => (
   <Icon {...p}>
     <path d="M15 18l-6-6 6-6" />

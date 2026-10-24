@@ -63,7 +63,7 @@ export function Revenue({ stats, transactions, onEdit }: { stats: ChallengeStats
           );
         })
       )}
-      <p className="text-center text-xs text-zinc-400">Tap a record to edit or delete it.</p>
+      <p className="text-center text-xs text-zinc-400">Tap ✎ on any record to edit its amount or details, or delete it.</p>
     </div>
   );
 }
