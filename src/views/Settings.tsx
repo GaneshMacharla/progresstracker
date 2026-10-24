@@ -2,8 +2,36 @@ import { useRef, useState } from 'react';
 import type { Challenge, RevenueTransaction } from '../lib/db';
 import { deleteAllData, updateChallenge } from '../lib/actions';
 import { buildBackup, download, restoreBackup, transactionsToCSV } from '../lib/export';
-import { Card, SectionTitle, secondaryButton } from '../components/ui';
+import { useInstall } from '../lib/install';
+import { Card, SectionTitle, primaryButton, secondaryButton } from '../components/ui';
 import { ChallengeForm } from './ChallengeForm';
+
+function InstallCard() {
+  const { installed, canPrompt, ios, install } = useInstall();
+  if (installed) return null;
+  return (
+    <Card>
+      <SectionTitle>Install the app</SectionTitle>
+      <p className="mb-3 text-sm text-zinc-500 dark:text-zinc-400">
+        Add it to your home screen: it opens full-screen, works offline, and the browser is far less likely to clear your data.
+      </p>
+      {canPrompt ? (
+        <button onClick={install} className={`${primaryButton} w-full`}>
+          Install app
+        </button>
+      ) : ios ? (
+        <p className="text-sm text-zinc-700 dark:text-zinc-300">
+          In Safari, tap <strong>Share</strong> → <strong>Add to Home Screen</strong>. The installed app has its own storage, so
+          back up here first and restore inside the installed app.
+        </p>
+      ) : (
+        <p className="text-sm text-zinc-700 dark:text-zinc-300">
+          Open your browser menu and choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.
+        </p>
+      )}
+    </Card>
+  );
+}
 
 export function Settings({ challenge, transactions, today, onDone }: { challenge: Challenge; transactions: RevenueTransaction[]; today: string; onDone: () => void }) {
   const fileRef = useRef<HTMLInputElement>(null);
@@ -41,6 +69,8 @@ export function Settings({ challenge, transactions, today, onDone }: { challenge
           }}
         />
       </Card>
+
+      <InstallCard />
 
       <Card>
         <SectionTitle>Your data</SectionTitle>
